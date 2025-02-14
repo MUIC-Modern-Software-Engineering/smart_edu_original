@@ -6,8 +6,10 @@ class StudentsController < ApplicationController
   include Pagy::Backend
   # GET /students or /students.json
   def index
-    @pagy, @students = pagy(Student.kept)
+    @q = Student.kept.ransack(params[:q])
+    @pagy, @students = pagy(@q.result(distinct: true))
   end
+
 
   # GET /students/1 or /students/1.json
   def show

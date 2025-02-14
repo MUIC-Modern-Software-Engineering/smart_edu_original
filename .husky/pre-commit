@@ -1,0 +1,22 @@
+# Pre-commit hook started
+echo "\033[1;34mRunning pre-commit hook...\033[0m"
+
+# Running Rubocop
+echo "\033[1;32mRunning RuboCop...\033[0m"
+bundle exec rubocop --autocorrect
+
+# Running Brakeman for security checks
+echo "\033[1;33mRunning Brakeman (Security Check)...\033[0m"
+bundle exec brakeman --skip-libs --output /dev/null
+
+# Staging changes after auto-correction
+echo "\033[1;36mStaging modified files...\033[0m"
+git add $(git diff --name-only --cached)
+
+# Running Rails Best Practices (doesn't affect commit)
+echo "\033[1;35mRunning Rails Best Practices (Does not affect commit)...\033[0m"
+bundle exec rails_best_practices || true
+
+# Done
+echo "\033[1;32mPre-commit checks complete! Ready to commit.\033[0m"
+

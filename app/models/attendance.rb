@@ -20,6 +20,10 @@
 #  user_id     (user_id => users.id)
 #
 class Attendance < ApplicationRecord
+  def self.ransackable_attributes(auth_object = nil)
+    [ "created_at", "id", "student_id", "timestamp", "updated_at", "user_id" ]
+  end
+
   belongs_to :student
   belongs_to :user
 end

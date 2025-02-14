@@ -1,24 +1,51 @@
-# README
+# Smart Edu
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This README documents the steps necessary to get the Smart Edu application up and running.
 
-Things you may want to cover:
+## Ruby Version
 
-* Ruby version
+- Ruby 3.4.1
 
-* System dependencies
+## System Dependencies
 
-* Configuration
+- Rails 8.0.1
+- PostgreSQL
+- Node.js
+- Bun
 
-* Database creation
+## Configuration
 
-* Database initialization
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/C0NS03L/smart_edu_original
+    cd smart_edu_original
+    ```
 
-* How to run the test suite
+2. Run the setup scripts:
+    ```sh
+    bun setup
+    ```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Database Creation
 
-* Deployment instructions
+1. Create and set up the database:
+    ```sh
+    bin/rails db:create
+    bin/rails db:migrate
+    ```
 
-* ...
+## Database Initialization
+
+1. Seed the database with initial data:
+    ```sh
+    bin/rails db:seed
+    ```
+
+## How to Run the Test Suite
+
+1. Run the tests:
+    ```sh
+    bin/rails test
+    ```
+
+## Deployment Instructions

@@ -6,8 +6,6 @@
 #  discarded_at :datetime
 #  name         :string
 #  uid          :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
 #
 # Indexes
 #
@@ -21,9 +19,8 @@ class Student < ApplicationRecord
   private
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[name]
+    [ "id", "name", "uid", "created_at", "updated_at" ]
   end
-
   def self.ransackable_associations(auth_object = nil)
     []
   end

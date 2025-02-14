@@ -8,10 +8,15 @@
     "test": "test"
   },
   "devDependencies": {
-    "daisyui": "^4.12.23"
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "daisyui": "^5.0.0-beta.7",
+    "husky": "^9.1.7"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "setup": "bun install && husky install && bundle install && bin/rails tailwindcss:install"
   },
   "author": "",
   "license": "ISC"

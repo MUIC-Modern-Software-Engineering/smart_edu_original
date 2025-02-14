@@ -7,31 +7,38 @@
   <%== pagy_nav(@pagy) %>
 </div>
 <div id="attendances" class="overflow-x-auto m-2">
+  <%= search_form_for @q, url: attendances_path, method: :get, class: "mb-4" do |f| %>
+    <div class="flex items-center space-x-2">
+      <%= f.label :student_id_eq, "Student ID", class: "mr-2" %>
+      <%= f.search_field :student_id_eq, class: "form-control border-2 border-gray-300 rounded p-2" %>
+      <%= f.submit "Search", class: "btn btn-primary ml-2" %>
+    </div>
+  <% end %>
   <table class="table table-zebra">
     <thead>
-      <tr>
-        <th>Student ID</th>
-        <th>Timestamp</th>
-        <th>User ID</th>
-        <th>action</th>
-      </tr>
+    <tr>
+      <th><%= sort_link(@q, :student_id, "Student ID") %></th>
+      <th><%= sort_link(@q, :timestamp, "Timestamp") %></th>
+      <th><%= sort_link(@q, :user_id, "User ID") %></th>
+      <th>Action</th>
+    </tr>
     </thead>
     <tbody>
-      <% @attendances.each do |attendance| %>
-        <tr>
-          <td><%= attendance.student_id %></td>
-          <td><%= attendance.timestamp %></td>
-          <td><%= attendance.user_id %></td>
-          <td>
-            <%= link_to attendance, class: "hover:text-blue-500 text-blue-700" do %>
-              <i class="fas fa-eye" title="Show"></i> View
-            <% end %>
-            <%= link_to edit_attendance_path(attendance), class: "hover:text-yellow-500 text-yellow-700" do %>
-              <i class="fas fa-edit" title="Edit"></i> Edit
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+    <% @attendances.each do |attendance| %>
+      <tr>
+        <td><%= attendance.student_id %></td>
+        <td><%= attendance.timestamp %></td>
+        <td><%= attendance.user_id %></td>
+        <td>
+          <%= link_to attendance, class: "hover:text-blue-500 text-blue-700" do %>
+            <i class="fas fa-eye" title="Show"></i> View
+          <% end %>
+          <%= link_to edit_attendance_path(attendance), class: "hover:text-yellow-500 text-yellow-700" do %>
+            <i class="fas fa-edit" title="Edit"></i> Edit
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
 </div>

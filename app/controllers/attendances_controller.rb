@@ -1,10 +1,14 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: %i[ show edit update destroy ]
   include Pagy::Backend
+
   # GET /attendances or /attendances.json
+  #
   def index
-    @pagy, @attendances = pagy(Attendance.all)
+    @q = Attendance.ransack(params[:q])
+    @pagy, @attendances = pagy(@q.result(distinct: true))
   end
+
 
   # GET /attendances/1 or /attendances/1.json
   def show
