@@ -2,7 +2,8 @@ require "application_system_test_case"
 
 class AttendancesTest < ApplicationSystemTestCase
   setup do
-    @attendance = attendances(:attendance_1)
+    @attendance = Attendance.first
+    @student = Student.find(@attendance.student_id)
     login
   end
 
@@ -13,10 +14,10 @@ class AttendancesTest < ApplicationSystemTestCase
 
   test "should create attendance" do
     visit new_attendance_url
-    within 'tr[data-content="Student 6"]' do
+    within "tr[data-content='#{@student.name}']" do
       click_on "Check-in"
     end
     first_row = "table#latest-attendances tbody tr:first-of-type td:first-of-type"
-    assert_selector first_row, text: "Student 6"
+    assert_selector first_row, text: @student.name
   end
 end

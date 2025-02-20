@@ -8,11 +8,20 @@
     "test": "test"
   },
   "devDependencies": {
-    "daisyui": "^4.12.23"
+    "daisyui": "^4.12.23",
+    "tailwindcss": "^4.0.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@tailwindcss/typography": "^0.5.16",
+    "controllers": "^0.0.2",
+    "datatables.net": "^2.2.2",
+    "datatables.net-responsive": "^3.0.3",
+    "jquery": "^3.7.1"
+  }
 }

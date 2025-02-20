@@ -11,7 +11,7 @@
           <i class="fas fa-tachometer-alt"></i> Dashboard
         <% end %></li>
       <li><%= link_to students_path do %>
-          <i class="fas fa-user-graduate"></i> Manage Student
+          <i class="fas fa-user-graduate"></i> Manage Students
         <% end %></li>
       <li><%= link_to new_attendance_path do %>
           <i class="fas fa-qrcode"></i> Add Attendance
@@ -19,7 +19,19 @@
       <li><%= link_to attendances_path do %>
           <i class="fas fa-list"></i> List Attendances
         <% end %></li>
-      <li><%= link_to session_path, data: {turbo_method: :delete} do %>
+
+      <% if current_user&.can_manage_teachers? %>
+        <li><%= link_to users_path do %>
+            <i class="fas fa-user-shield"></i> Manage Users
+          <% end %></li>
+      <% end %>
+      <% if current_user.admin? %>
+      <li><%= link_to "/students/scan" do %>
+          <i class="fas fa-qrcode"></i> Scan QR Code
+        <% end %></li>
+       <% end %>
+
+      <li><%= link_to session_path, data: { turbo_method: :delete } do %>
           <i class="fas fa-sign-out-alt"></i> Logout
         <% end %></li>
     </ul>

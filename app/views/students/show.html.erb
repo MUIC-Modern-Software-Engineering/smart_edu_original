@@ -1,15 +1,17 @@
 <%= render "shared/notice" %>
-<div class="flex justify-center">
+<div class="student-card max-w-md mx-auto mt-3">
+  <div class="mt-2">
+    <%= link_to students_path, class: "btn" do %>
+      <i class="fas fa-arrow-left"></i> Back
+    <% end %>
+  </div>
   <%= render @student %>
-</div>
 <div class="mt-8 flex justify-center space-x-4">
   <%= link_to edit_student_path(@student), class: "btn btn-primary" do %>
-    <i class="fas fa-edit"></i> Edit this student
-  <% end %>
-  <%= link_to students_path, class: "btn btn-secondary" do %>
-    <i class="fas fa-arrow-left"></i> Back to students
+    <i class="fas fa-edit"></i> Edit
   <% end %>
   <%= button_to student_path(@student), method: :delete, class: "btn btn-error", data: { turbo_confirm: "Are you sure you want to destroy this student?" } do %>
-    <i class="fas fa-trash"></i> Destroy this student
+    <i class="fas fa-trash "></i> Delete
   <% end %>
+</div>
 </div>

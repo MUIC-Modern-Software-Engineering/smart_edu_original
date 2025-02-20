@@ -1,0 +1,8 @@
+<%= render "shared/notice" %>
+<% content_for :title, "Manage Users" %>
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg">
+  <div id="pending-users-list">
+    <%= render "users/user_table", pending_users: @pending_users %>
+  </div>
+</div>

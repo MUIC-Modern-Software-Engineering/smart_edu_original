@@ -6,10 +6,11 @@ require "./test/helpers/authentication_helper"
 def ci?
   ENV["CI"] == "true"
 end
+
 module SignInHelper
   def sign_in
-    user = users(:one)
-    post session_url, params: { email_address: user.email_address, password: "password" }
+    user = User.find_by!(role: "principal")
+    post session_url, params: { email_address: user.email_address, password: "password123" }
   end
 end
 
@@ -22,9 +23,9 @@ module ActiveSupport
     # Run tests in parallel with specified workers
     parallelize(workers: 8)
 
-    # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-    fixtures :all
-
-    # Add more helper methods to be used by all tests here...
+    # Ensure test DB is seeded before running tests
+    setup do
+      Rails.application.load_seed unless User.exists?
+    end
   end
 end

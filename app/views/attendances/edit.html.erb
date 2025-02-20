@@ -1,12 +1,24 @@
 <% content_for :title, "Editing attendance" %>
 
-<h1>Editing attendance</h1>
+<div class="mt-2">
+  <h2 class="student-title">Attendance</h2>
+</div>
+<div class="student-card max-w-md mx-auto mt-2 p-4 border rounded-lg shadow-lg">
 
-<%= render "form", attendance: @attendance %>
+  <!-- Back & Edit Buttons in the Same Line -->
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <%= link_to attendances_path, class: "btn" do %>
+      <i class="fas fa-arrow-left"></i> Back
+    <% end %>
+  </div>
+  <%= render "form", attendance: @attendance %>
+  <br>
 
-<br>
+  <!-- Show Button -->
+<!--  <div>-->
+<!--    <div class="mt-4 flex justify-center space-x-4">-->
+      <%#= link_to "Show this attendance", @attendance, class: "btn student-btn-show w-full mt-2" %>
+<!--    </div>-->
+<!--  </div>-->
 
-<div>
-  <%= link_to "Show this attendance", @attendance %> |
-  <%= link_to "Back to attendances", attendances_path %>
 </div>

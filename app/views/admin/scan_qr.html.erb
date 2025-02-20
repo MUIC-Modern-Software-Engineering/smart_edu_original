@@ -1,0 +1,12 @@
+<h1>Scan QR Code</h1>
+
+<video id="preview" style="width: 100%; height: auto;"></video>
+
+<!-- CSRF meta tag -->
+<meta name="csrf-token" content="<%= form_authenticity_token %>">
+
+<!-- Instascan library -->
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+<!-- Custom QR scanner JavaScript -->
+<%= javascript_include_tag "qr_scanner" %>

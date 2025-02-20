@@ -67,7 +67,6 @@ gem "rqrcode", "~> 2.0"
 
 
 gem "pagy", "~> 9.3" # omit patch digit
-gem "tailwindcss-rails", "~> 3.3"
 
 gem "ransack", "~> 4.2"
 
@@ -76,3 +75,7 @@ gem "faker", "~> 3.5"
 gem "discard", "~> 1.4"
 
 gem "pry-byebug", "~> 3.10"
+
+gem "tailwindcss-ruby", "~> 3.4"
+
+gem "tailwindcss-rails", "~> 3.3"

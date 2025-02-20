@@ -1,6 +1,6 @@
 <%= form_with(model: attendance) do |form| %>
   <%= form_for(attendance) do |form| %>
-    <div style="color: red">
+    <div style="color: red", class="mt-3">
       <h2><%= pluralize(attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
       <ul>
         <% attendance.errors.each do |error| %>
@@ -9,23 +9,25 @@
       </ul>
     </div>
   <% end %>
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
-  </div>
-  <div>
-    <%= form.label :timestamp, style: "display: block" %>
-    <%= form.datetime_field :timestamp %>
-  </div>
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+  <div class="form-control mt-3">
+    <div>
+      <%= form.label :student_id, style: "display: block", class: "mt-3" %>
+      <%= form.text_field :student_id, class: "input input-bordered w-full mt-2"%>
+    </div>
+    <div>
+      <%= form.label :timestamp, style: "display: block", class: "mt-3" %>
+      <%= form.datetime_field :timestamp, class: "input input-bordered w-full mt-2" %>
+    </div>
+    <div>
+      <%= form.label :user_id, style: "display: block", class: "mt-3" %>
+      <%= form.text_field :user_id, class: "input input-bordered w-full mt-2" %>
+    </div>
+    <div>
+      <%= form.label :status, style: "display: block", class: "mt-3" %>
+      <%= form.text_field :status, class: "input input-bordered w-full mt-2" %>
+    </div>
+    <div>
+      <%= form.submit "Update", class: "btn btn w-full mt-2 student-submit mt-4" %>
+    </div>
+  <% end %>
+</div>

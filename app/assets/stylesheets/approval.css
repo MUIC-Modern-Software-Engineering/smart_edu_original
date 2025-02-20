@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.approve-btn, .cancel-btn {
+    transition: all 0.3s ease-in-out;
+    color: black;
+}
+
+.approve-btn:hover {
+    background-color: #28cc64;
+    transform: scale(1.05);
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #e43333;
+    transform: scale(1.05);
+    color: white;
+}

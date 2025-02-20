@@ -9,11 +9,34 @@
       </ul>
     </div>
   <% end %>
+
   <div class="form-control">
     <%= form.label :name, class: 'label' %>
     <%= form.text_field :name, class: 'input input-bordered w-full' %>
   </div>
+
+  <div class="mb-4">
+    <%= form.label :grade, class:'label' %>
+    <%= form.text_field :grade, class: 'input input-bordered w-full', required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :classroom_id, class: 'label' %>
+    <%= form.text_field :classroom_id, class: 'input input-bordered w-full', required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :student_email_address, class: 'label' %>
+    <%= form.email_field :student_email_address, class: 'input input-bordered w-full', required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :parent_email_address, class: 'label' %>
+    <%= form.email_field :parent_email_address, class: 'input input-bordered w-full', required: true %>
+  </div>
+
   <div class="form-control mt-4">
     <%= form.submit class: 'btn btn-primary w-full' %>
   </div>
+
 <% end %>

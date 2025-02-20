@@ -1,45 +1,119 @@
 <%= render "shared/notice" %>
+
 <% content_for :title, "Students" %>
-<div class="flex justify-end px-2">
+
+<!--<div class="flex justify-end px-2">-->
+  <%#= link_to "New student", new_student_path, class: "btn btn-primary" %>
+<!--</div>-->
+
+<div class="flex justify-end items-center space-x-4 px-4 mb-4">
+  <div>
+    <%= form_with(url: students_path, method: :get, local: true, class: "inline-block") do %>
+      <label for="grade" class="mr-2">Filter by Grade:</label>
+      <select name="grade" id="grade" class="border rounded px-2 py-1">
+        <option value="">All Grades</option>
+        <% @grades.each do |grade| %>
+          <option value="<%= grade %>" <%= "selected" if params[:grade] == grade.to_s %>><%= grade %></option>
+        <% end %>
+      </select>
+      <%= submit_tag "Filter", class: "ml-2 btn btn-secondary" %>
+    <% end %>
+  </div>
+
   <%= link_to "New student", new_student_path, class: "btn btn-primary" %>
 </div>
-<div class="flex justify-center items-center">
-  <%== pagy_nav(@pagy) %>
-</div>
+
+
+<!-- Currently removing the pagy nav bars in top, since it's already built in with data table -->
+<!-- But can change later for sure -->
+<!-- <div class="flex justify-center items-center"> -->
+<%#== pagy_nav(@pagy) %>
+<!-- </div> -->
+
 <div class="overflow-x-auto m-2">
-  <table class="table table-zebra ">
-    <!-- head -->
+  <table id="students-table" class="w-full text-left border-separate border-spacing-0 bg-white shadow-md rounded-2xl overflow-hidden hover" data-turbo="false">
+
     <thead>
-      <tr>
-        <th></th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>UID</th>
-        <th>Actions</th>
-      </tr>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>UID</th>
+      <th>Status</th>
+      <th>Grade</th>
+      <th>Classroom</th>
+      <th>Student Email</th>
+      <th>Parent Email</th>
+      <th>Actions</th>
+    </tr>
     </thead>
+
     <tbody>
-      <% @students.each do |student| %>
-        <tr>
-          <td></td>
-          <td><%= student.id%></td>
-          <td><%= student.name%></td>
-          <td><%= student.uid%></td>
-          <td>
-            <div class="flex space-x-2">
-              <%= link_to student, class: "hover:text-blue-500 text-blue-700" do %>
-                <i class="fas fa-eye" title="Show"></i> View
-              <% end %>
-              <%= link_to edit_student_path(student), class: "hover:text-yellow-500 text-yellow-700" do %>
-                <i class="fas fa-edit" title="Edit"></i> Edit
-              <% end %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
+    <% @students.each do |student| %>
+      <tr>
+        <td></td>
+        <td><%= student.id %></td>
+        <td><%= student.name %></td>
+        <td><%= student.uid %></td>
+        <td>
+          <% if student.is_active? %>
+            <span class="text-green-600 font-bold">Active</span>
+          <% else %>
+            <span class="text-red-600 font-bold">Archived</span>
+          <% end %>
+        </td>
+        <td><%= student.grade %></td> <!-- Display grade -->
+        <td><%= student.classroom_id %></td>
+        <td><%= student.student_email_address %></td>
+        <td><%= student.parent_email_address %></td>
+
+        <td>
+          <div class="flex space-x-2">
+            <%= link_to student, class: "hover:text-blue-500 text-blue-700" do %>
+              <i class="fas fa-eye" title="Show"></i> View
+            <% end %>
+            <%= link_to edit_student_path(student), class: "hover:text-yellow-500 text-yellow-700" do %>
+              <i class="fas fa-edit" title="Edit"></i> Edit
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
     </tbody>
+
   </table>
 </div>
-<div class="flex justify-center items-center">
-  <%== pagy_nav(@pagy) %>
-</div>
+
+<!-- Currently removing the pagy nav bars in top, since it's already built in with data table -->
+<!-- <div class="flex justify-center items-center"> -->
+<%#== pagy_nav(@pagy) %>
+<!-- </div> -->
+
+<script>
+    document.addEventListener("turbo:load", function () {
+        const tableId = "#students-table";
+
+        if ($.fn.DataTable.isDataTable(tableId)) {
+            $(tableId).DataTable().destroy();
+        }
+
+        $(tableId).DataTable({
+            responsive: true,
+            pageLength: 10,
+            language: {
+                search: "",
+                searchPlaceholder: "Search students...",
+            },
+        });
+
+        // ------ Feature: Filter by Grade change auto ------
+        // filter when click + but it seems weird, but might be useful for future
+        // auto-submit filter on change
+        // document.getElementById("grade").addEventListener("change", function () {
+        //     this.form.submit();
+        // });
+        // -------------------------------------------------
+
+
+    });
+</script>

@@ -23,3 +23,16 @@ class Attendance < ApplicationRecord
   belongs_to :student
   belongs_to :user
 end
+
+def checkin
+  uid = params[:uid]
+
+  student = Student.find_by(uid: uid)
+  if student
+    Attendance.create(student: student, timestamp: Time.current, user: current_user)
+    flash[:notice] = "Student checked in successfully at #{Time.current.strftime('%H:%M:%S')}."
+  else
+    flash[:alert] = "Student not found."
+  end
+  redirect_to admin_scan_qr_path
+end
