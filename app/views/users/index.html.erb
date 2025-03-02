@@ -1,0 +1,47 @@
+<%= render "shared/notice" %>
+<%= render "shared/confirmation_modal" %>
+
+<% content_for :title, "Manage Users" %>
+
+<div class="entity-container">
+  <% if @pending_users.any? %>
+    <table class="entity-table">
+      <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>School Email</th>
+        <th>Personal Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @pending_users.each do |user| %>
+        <tr id="user-<%= user.id %>">
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.email_address %></td>
+          <td><%= user.personal_email %></td>
+          <td><%= user.role.capitalize %></td>
+          <td class="flex space-x-4">
+            <button class="entity-btn bg-green-500 hover:bg-green-600"
+                    onclick="confirmApprove(<%= user.id %>, '<%= user.email_address %>')">
+              <i class="fas fa-check"></i> Approve
+            </button>
+            <button class="entity-btn entity-btn-delete"
+                    onclick="confirmDelete(<%= user.id %>, '<%= user.email_address %>', '/users')">
+              <i class="fas fa-trash"></i> Remove
+            </button>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-center text-gray-600 mt-6">No pending approvals.</p>
+  <% end %>
+</div>
+
+<%= javascript_include_tag "controllers/delete_entity_controller" %>
+<%= javascript_include_tag "controllers/approval_entity_controller" %>

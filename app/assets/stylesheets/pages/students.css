@@ -1,0 +1,70 @@
+/* app/assets/stylesheets/pages/students.css */
+@layer components {
+    .student-card {
+        @apply bg-white rounded-xl shadow-xl p-4;
+    }
+
+    .student-title {
+        @apply text-2xl font-bold text-center mb-4;
+    }
+
+    .student-btn-show {
+        @apply text-white bg-gray-500 hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium ;
+    }
+
+    .student-btn-secondary {
+        @apply bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition;
+    }
+
+    .student-submit {
+        @apply bg-blue-500 text-white btn w-full mt-2 hover:bg-blue-600 transition;
+    }
+
+}
+
+
+/*For the List attendance and Student Page (Table Design*/
+
+#students-table tbody tr:hover {
+    background-color: #F9FAFB; /* Light hover */
+}
+
+/* Custom Table CSS */
+#students-table {
+    border-collapse: collapse;
+}
+
+#students-table thead th {
+    background: #1f2937;
+    color: white;
+    text-align: left;
+}
+
+#students-table tr {
+    transition: background-color 0.2s ease;
+}
+
+#students-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+
+#List-Attendance {
+    border-collapse: collapse;
+}
+
+#List-Attendance thead th {
+    background: #1f2937;
+    color: white;
+    text-align: left;
+}
+
+#List-Attendance tr {
+    transition: background-color 0.2s ease;
+}
+
+#List-Attendance tr:hover {
+    background-color: #f1f5f9;
+}
+
+/*DDNE*/

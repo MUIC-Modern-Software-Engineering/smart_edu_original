@@ -3,18 +3,20 @@ class AttendancesController < ApplicationController
   include Pagy::Backend
   # GET /attendances or /attendances.json
   def index
-    @pagy, @attendances = pagy(Attendance.all)
+    @attendances = Attendance.all
   end
 
   # GET /attendances/1 or /attendances/1.json
   def show
+    # This method is intentionally left empty because the show functionality
+    # is handled by the view and does not require any additional logic.
   end
 
   # GET /attendances/new
   def new
-    @q = Student.ransack(params[:q])
+    @q = Student.active.ransack(params[:q])
     @students = @q.result(distinct: true)
-    @attendances = Attendance.order(timestamp: :desc).limit(20).includes(:student)
+    @attendances = Attendance.order(timestamp: :desc).limit(10)
     respond_to do |format|
       format.html # For normal page loads
       format.turbo_stream # For Turbo-powered live updates
@@ -23,16 +25,17 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1/edit
   def edit
+    # This method is intentionally left empty because the edit functionality
+    # is handled by the view and does not require any additional logic.
   end
 
   # POST /attendances or /attendances.json
   def create
-    p = params.permit(:student_id).merge(user_id: Current.user.id, timestamp: Time.zone.now)
-    @attendance = Attendance.new(p)
-    @attendance.save!
+    student = Student.find(params[:student_id])
+    CheckinService.checkin(student, Current.user)
     respond_to do |format|
-      format.html { redirect_to new_attendance_path(request.parameters) } # For normal page loads
-      format.turbo_stream { redirect_to new_attendance_path(request.parameters) }# For Turbo-powered live updates
+      format.html { redirect_to new_attendance_path(request.parameters) }
+      format.turbo_stream { redirect_to new_attendance_path(request.parameters) }
     end
   end
 

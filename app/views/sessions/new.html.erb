@@ -1,13 +1,27 @@
 <%= render "shared/single_box" do %>
   <div>
     <h1 class="text-3xl font-bold pb-4"> <%= render "shared/logo_text" %> Sign in</h1>
-    <%= tag.div(flash[:alert], class: "alert alert-error") if flash[:alert] %>
-    <%= tag.div(flash[:notice], class: "alert alert-success") if flash[:notice] %>
+
+    <% if flash[:alert] %>
+      <div class="alert alert-error">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <% if flash[:notice] %>
+      <div class="alert alert-success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
     <%= form_with(url: session_path, html: { autocomplete: "on" }) do |form| %>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "input input-bordered input-primary w-full mt-2" %><br>
-      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", class: "input input-bordered input-primary w-full mt-2" %><br>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "input input-bordered input-primary w-full mt-2" %>
+      <br>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", class: "input input-bordered input-primary w-full mt-2" %>
+      <br>
       <%= form.submit "Sign in", class: "btn btn-primary btn-wide mt-4 w-full" %>
     <% end %>
+
     <div class="text-center py-4">
       or
     </div>

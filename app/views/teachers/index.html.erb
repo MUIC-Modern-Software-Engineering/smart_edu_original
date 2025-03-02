@@ -1,0 +1,39 @@
+<%= render "shared/notice" %>
+<%= render "shared/confirmation_modal" %>
+<% content_for :title, "Manage Teachers" %>
+
+<div class="entity-container">
+  <% if @teachers.any? %>
+    <table class="entity-table" id="teachers-table">
+      <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>School Email</th>
+        <th>Personal Email</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @teachers.each do |teacher| %>
+        <tr id="teacher-<%= teacher.id %>">
+          <td><%= teacher.first_name %></td>
+          <td><%= teacher.last_name %></td>
+          <td><%= teacher.email_address %></td>
+          <td><%= teacher.personal_email %></td>
+          <td>
+            <button class="entity-btn entity-btn-delete"
+                    onclick="confirmDelete(<%= teacher.id %>, '<%= teacher.email_address %>', '/teachers')">
+              <i class="fas fa-trash"></i> Remove
+            </button>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-left text-gray-600 mt-6 px-6">No teachers available.</p>
+  <% end %>
+</div>
+
+<%= javascript_include_tag "controllers/delete_entity_controller" %>

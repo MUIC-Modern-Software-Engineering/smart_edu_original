@@ -12,7 +12,7 @@
         <% @students.each do |student| %>
           <tr class="hover" data-content="<%= student.name %>">
             <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
-            <td><%= submit_tag "Check-in", name: "check_in", 
+            <td><%= submit_tag "Check-in", name: "check_in",
               formaction: attendances_path(student_id: student.id),
               formmethod: :post,
               class: "btn btn-primary btn-xs",

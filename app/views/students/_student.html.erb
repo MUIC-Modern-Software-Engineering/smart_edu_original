@@ -1,10 +1,20 @@
-<div class="p-4 card w-1/2 shadow-xl bg-neutral-200">
+<div class=>
   <div class="card-body">
-    <h2 class="card-title">Name: <%= student.name %> </h2>
-    <p>ID: <%= student.id %></p>
-    <p>UID: <%= student.uid %></p>
+    <h2 class="card-title text-xl font-bold">Name: <%= student.name %></h2>
+    <p class="text-gray-700">ID: <%= student.id %></p>
+    <p class="text-gray-700">Grade: <%= student.grade %></p>
+    <p class="text-gray-700">Classroom: <%= student.classroom_id %></p>
+    <p class="text-gray-700">Student Email: <%= student.student_email_address %></p>
+    <p class="text-gray-700">Parent Email: <%= student.parent_email_address %></p>
+
+    <!-- Display the UID -->
+<!--    <p class="text-gray-500 break-words">UID: <%#= student.uid %></p>-->
   </div>
-  <figure class="p-5">
-    <%= raw RQRCode::QRCode.new(student.uid).as_svg %>
+
+  <!-- Small Clickable QR Code -->
+  <figure class="p-5 flex justify-center">
+    <%= link_to "#qr-modal", class: "cursor-pointer", data: { turbo_frame: "qr-modal" } do %>
+      <%= generate_qr_code(@student.uid) %>
+    <% end %>
   </figure>
 </div>

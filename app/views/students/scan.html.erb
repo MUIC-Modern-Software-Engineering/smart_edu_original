@@ -1,0 +1,16 @@
+<h1>Scan QR Code</h1>
+
+<video id="preview"></video>
+
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+<!-- Include CSRF Token -->
+<meta name="csrf-token" content="<%= form_authenticity_token %>">
+
+<%= form_with url: "/admin/checkin", method: :post, local: true do |f| %>
+  <div class="form-group">
+    <label for="uid">Scan QR Code</label>
+    <input type="text" name="uid" id="uid" class="form-control" required>
+  </div>
+  <%= f.submit "Check-in", class: "btn btn-primary" %>
+<% end %>

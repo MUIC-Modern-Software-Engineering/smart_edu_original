@@ -1,0 +1,22 @@
+<% content_for :title, "Classroom #{@classroom.class_id}" %>
+
+<h1 class="text-3xl font-bold text-center mb-6">Students in Classroom <%= @classroom.class_id %></h1>
+
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
+  <% if @students.any? %>
+    <ul class="divide-y divide-gray-200">
+      <% @students.each do |student| %>
+        <li class="py-4">
+          <span class="text-lg font-medium"><%= student.name %></span>
+          <span class="text-gray-500">(ID: <%= student.id %>)</span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-center text-gray-500">No students enrolled in this classroom.</p>
+  <% end %>
+</div>
+
+<div class="text-center mt-6">
+  <%= link_to "Back to Classrooms", by_grade_classrooms_path(@classroom.class_id.first), class: "text-blue-500 hover:underline" %>
+</div>

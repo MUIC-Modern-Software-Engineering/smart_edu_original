@@ -23,7 +23,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-RUN apt-get install -y --no-install-recommends nodejs && \ 
+RUN apt-get install -y --no-install-recommends nodejs && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 # Set production environment
 ENV RAILS_ENV="production" \
