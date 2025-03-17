@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <title>Check-In Notification</title>
+</head>
+<body>
+
+<p>Dear Parent,</p>
+
+<p>We wanted to inform you that <strong><%= @student.name %></strong> has successfully checked in at <%= @attendance.created_at.strftime("%I:%M %p") %>.</p>
+
+<p>Best regards,</p>
+<p>School Administration</p>
+</body>
+</html>

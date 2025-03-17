@@ -1,0 +1,6 @@
+<h1>Payment Receipt</h1>
+<p>Thank you for your payment.</p>
+<p><strong>Name:</strong> <%= @payment.first_name %> <%= @payment.last_name %></p>
+<p><strong>Amount:</strong> $<%= @payment.amount %></p>
+<p><strong>Transaction ID:</strong> <%= @payment.stripe_payment_intent_id %></p>
+<p><strong>Date:</strong> <%= @payment.created_at.strftime("%B %d, %Y at %H:%M") %></p>

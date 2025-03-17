@@ -1,45 +1,77 @@
 <%= render "shared/notice" %>
-<% content_for :title, "Students" %>
-<div class="flex justify-end px-2">
-  <%= link_to "New student", new_student_path, class: "btn btn-primary" %>
+
+<% content_for :title, "Manage Students" %>
+
+<div class="flex justify-end space-x-4 px-6">
+  <div class="flex items-center justify-end space-x-4 mb-2">
+    <!-- Filter Dropdown -->
+    <div class="flex items-center space-x-2">
+      <label for="grade" class="text-center">Filter by Grade:</label>
+      <%= form_with(url: students_path, method: :get, local: true, class: "inline-block", id: "gradeFilterForm") do %>
+        <select name="grade" id="grade" class="border rounded-xl px-3 py-2">
+          <option value="">All Grades</option>
+          <% @grades.each do |grade| %>
+            <option value="<%= grade %>" <%= "selected" if params[:grade] == grade.to_s %>><%= grade %></option>
+          <% end %>
+        </select>
+      <% end %>
+    </div>
+
+    <!-- "New Student" Button -->
+    <% if current_user&.can_manage_teachers? %>
+      <%= link_to "New student", new_student_path, class: "entity-btn bg-[#FFEAD2] text-black hover:bg-[#e6d3bc]" %>
+    <% end %>
+  </div>
 </div>
-<div class="flex justify-center items-center">
-  <%== pagy_nav(@pagy) %>
-</div>
-<div class="overflow-x-auto m-2">
-  <table class="table table-zebra ">
-    <!-- head -->
+
+<div class="my-entity-container px-6">
+  <table id="shared-table" class="entity-table" data-turbo="false">
     <thead>
-      <tr>
-        <th></th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>UID</th>
-        <th>Actions</th>
-      </tr>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>UID</th>
+      <th>Status</th>
+      <th>Grade</th>
+      <th>Classroom</th>
+      <th>Student Email</th>
+      <th>Actions</th>
+    </tr>
     </thead>
     <tbody>
-      <% @students.each do |student| %>
-        <tr>
-          <td></td>
-          <td><%= student.id%></td>
-          <td><%= student.name%></td>
-          <td><%= student.uid%></td>
-          <td>
-            <div class="flex space-x-2">
-              <%= link_to student, class: "hover:text-blue-500 text-blue-700" do %>
-                <i class="fas fa-eye" title="Show"></i> View
-              <% end %>
+    <% @students.each do |student| %>
+      <tr>
+        <td></td>
+        <td><%= student.id %></td>
+        <td><%= student.name %></td>
+        <td><%= student.uid %></td>
+        <td>
+          <% if student.is_active? %>
+            <span class="text-green-600 font-bold">Active</span>
+          <% else %>
+            <span class="text-red-600 font-bold">Archived</span>
+          <% end %>
+        </td>
+        <td><%= student.grade %></td>
+        <td><%= student.classroom_id %></td>
+        <td><%= student.student_email_address %></td>
+        <td>
+          <div class="flex space-x-2">
+            <%= link_to student, class: "hover:text-blue-500 text-blue-700" do %>
+              <i class="fas fa-eye" title="Show"></i> View
+            <% end %>
+            <% if current_user&.can_manage_teachers? %>
               <%= link_to edit_student_path(student), class: "hover:text-yellow-500 text-yellow-700" do %>
                 <i class="fas fa-edit" title="Edit"></i> Edit
               <% end %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
 </div>
-<div class="flex justify-center items-center">
-  <%== pagy_nav(@pagy) %>
-</div>
+
+<%= javascript_include_tag "controllers/students_table_controller" %>

@@ -1,8 +1,39 @@
-<% if notice %>
-  <div class="flex justify-center">
-    <div class="alert alert-success shadow-lg text-center max-w-md mb-4">
-      <i class="fas fa-check-circle"></i>
-      <span><%= notice %></span>
-    </div>
+<% if flash[:notice] || flash[:error] || flash[:errors] %>
+  <div id="flash-message" class="flex justify-center">
+    <% if flash[:notice] %>
+      <div class="alert alert-success shadow-lg text-center max-w-md mb-4">
+        <i class="fas fa-check-circle"></i>
+        <span><%= flash[:notice] %></span>
+      </div>
+    <% end %>
+
+    <% if flash[:error] %>
+      <div class="alert alert-error shadow-lg text-center max-w-md mb-4">
+        <i class="fas fa-exclamation-circle"></i>
+        <span><%= flash[:error] %></span>
+      </div>
+    <% end %>
+
+    <% if flash[:errors] %>
+      <div class="alert alert-error shadow-lg text-center max-w-md mb-4">
+        <i class="fas fa-exclamation-circle"></i>
+        <ul class="text-left ml-4 list-disc">
+          <%= flash[:errors].html_safe %>
+        </ul>
+      </div>
+    <% end %>
   </div>
+
+  <script>
+      setTimeout(function() {
+          var flashMessage = document.getElementById("flash-message");
+          if (flashMessage) {
+              flashMessage.style.transition = "opacity 0.5s ease";
+              flashMessage.style.opacity = "0";
+              setTimeout(function() {
+                  flashMessage.style.display = "none";
+              }, 500); // Ensure it fully disappears after fade-out
+          }
+      }, 5000); // 5 seconds
+  </script>
 <% end %>

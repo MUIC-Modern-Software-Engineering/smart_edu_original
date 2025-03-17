@@ -5,23 +5,49 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
+#  approved        :boolean          default(FALSE)
 #  email_address   :string           not null
+#  first_name      :string           not null
+#  is_active       :boolean          default(TRUE)
+#  last_name       :string           not null
 #  password_digest :string           not null
+#  personal_email  :string           not null
+#  role            :string           default("student")
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  school_id       :integer
 #
 # Indexes
 #
 #  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_school_id      (school_id)
 #
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
+#
+
 one:
-  email_address: one@example.com
-  password_digest: <%= password_digest %>
+  email: "alice@example.com"
+  password_digest: <%= BCrypt::Password.create('password') %>  # Assuming you're using Devise for authentication
+  # Any other necessary fields
 
-two:
-  email_address: two@example.com
-  password_digest: <%= password_digest %>
+admin:
+  first_name: "Admin"
+  last_name: "User"
+  email_address: "admin@example.com"
+  personal_email: "admin@example.com"
+  password_digest: <%= User.new(password: "password123").password_digest %>
+  role: "admin"
+  approved: true
+  school_id: 1
 
-three:
-  email_address: a@a.com
-  password_digest: <%= password_digest %>
+teacher:
+  first_name: "Teacher"
+  last_name: "User"
+  email_address: "teacher@example.com"
+  personal_email: "teacher@example.com"
+  password_digest: <%= User.new(password: "password123").password_digest %>
+  role: "teacher"
+  approved: false
+  school_id: 1

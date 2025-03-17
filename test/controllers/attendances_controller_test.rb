@@ -2,7 +2,7 @@ require "test_helper"
 
 class AttendancesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @attendance = attendances(:attendance_1)
+    @attendance = Attendance.find_by!(student_id: 1) # Adjust based on your seed data
     sign_in
   end
 
@@ -17,7 +17,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create attendance" do
-    assert_difference("Attendance.count") do
+    assert_changes("Attendance.count") do
       post attendances_url, params: { student_id: @attendance.student_id }
       puts @response.body
     end
@@ -34,7 +34,7 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update attendance" do
-    patch attendance_url(@attendance), params: { attendance: { student_id: @attendance.student_id, timestamp: @attendance.timestamp, user_id: @attendance.user_id } }
+    patch attendance_url(@attendance), params: { attendance: { student_id: @attendance.student_id, timestamp: Time.current, user_id: @attendance.user_id } }
     assert_redirected_to attendance_url(@attendance)
   end
 
@@ -42,7 +42,6 @@ class AttendancesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Attendance.count", -1) do
       delete attendance_url(@attendance)
     end
-
     assert_redirected_to attendances_url
   end
 end

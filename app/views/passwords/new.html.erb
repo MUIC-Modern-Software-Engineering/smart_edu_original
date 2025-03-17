@@ -1,8 +1,20 @@
-<h1>Forgot your password?</h1>
+<%= render "shared/single_box" do %>
+  <div>
+    <h1 class="text-3xl font-bold pb-4"> Reset your password</h1>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+    <p class="encore-text encore-text-body-medium" data-encore-id="text" style="padding-block-end:16px">
+      Enter your email address and we'll send you a link to reset your password.
+    </p>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.submit "Email reset instructions" %>
+    <%= form_with(url: passwords_path, html: { class: "contents" }) do |form| %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Email address", value: params[:email_address], class: "input input-bordered input-primary w-full mt-2" %>
+      <br>
+      <%= form.submit "Email reset instructions", class: "btn btn-primary btn-wide mt-4 w-full" %>
+    <% end %>
+
+    <div class="pt-4 text-center">
+      <%= link_to "Back to Sign In", new_session_path, method: :get, class: "text-[#8294C4] hover:underline" %>
+    </div>
+
+  </div>
 <% end %>

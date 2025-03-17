@@ -1,0 +1,381 @@
+
+<div class="student-card max-w-md mx-auto mt-10 bg-white rounded-lg shadow-md p-6" data-turbo-permanent id="payment-wizard-container">
+
+  <h1 class="student-title">New Payment</h1>
+
+  <!-- Progress bar -->
+  <div class="flex mb-8 relative">
+    <div class="flex-1 relative">
+      <div class="w-8 h-8 bg-blue-500 text-white rounded-full mx-auto flex items-center justify-center border-2 border-gray-200">1</div>
+      <p class="text-center text-xs mt-1">Personal</p>
+    </div>
+    <div class="flex-1 relative">
+      <div class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full mx-auto flex items-center justify-center border-2 border-gray-200">2</div>
+      <p class="text-center text-xs mt-1">Amount</p>
+    </div>
+    <div class="flex-1 relative">
+      <div class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full mx-auto flex items-center justify-center border-2 border-gray-200">3</div>
+      <p class="text-center text-xs mt-1">Payment</p>
+    </div>
+    <div class="flex-1 relative">
+      <div class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full mx-auto flex items-center justify-center border-2 border-gray-200">4</div>
+      <p class="text-center text-xs mt-1">Review</p>
+    </div>
+    <div class="absolute top-4 left-0 w-full h-0.5 bg-gray-200 -z-10"></div>
+  </div>
+
+  <!-- Steps content -->
+  <div id="payment-form-wizard">
+    <!-- Step 1: Personal Information -->
+    <div class="block py-5" id="step-1">
+      <h2 class="text-2xl font-bold mb-6">Personal Information</h2>
+      <div class="mb-5">
+        <label for="first_name" class="block mb-2 font-medium">First Name</label>
+        <input type="text" id="first_name" name="first_name" class="input input-bordered w-full" required>
+      </div>
+      <div class="mb-5">
+        <label for="last_name" class="block mb-2 font-medium">Last Name</label>
+        <input type="text" id="last_name" name="last_name" class="input input-bordered w-full" required>
+      </div>
+      <div class="mb-5">
+        <label for="email" class="block mb-2 font-medium">Email</label>
+        <input type="email" id="email" name="email" class="input input-bordered w-full" required>
+      </div>
+      <div class="flex justify-end mt-8">
+        <button type="button" id="next-to-2" class="btn btn-primary w-full">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Amount -->
+    <div class="hidden py-5" id="step-2">
+      <h2 class="text-2xl font-bold mb-6">Payment Amount</h2>
+      <div class="mb-5">
+        <label class="block mb-2 font-medium">Choose Tier</label>
+        <label>
+          <input type="radio" name="tier" value="200" checked onchange="calculateTierAmount()" />
+          Tier 1
+        </label>
+        <label class="ml-4">
+          <input type="radio" name="tier" value="350" onchange="calculateTierAmount()" />
+          Tier 2
+        </label>
+      </div>
+      <div class="mb-5">
+        <label for="student_count" class="block mb-2 font-medium">Number of Students</label>
+        <input
+          type="number" id="student_count"
+          name="student_count" min="1"
+          class="w-full p-3 border border-gray-300 rounded-md"
+          required
+          oninput="calculateTierAmount()"
+          />
+      </div>
+      <input type="hidden" id="amount" name="amount" value="0" />
+
+      <div class="flex justify-between mt-8">
+        <button type="button" id="prev-to-1" class="btn">Back</button>
+        <button type="button" id="next-to-3" class="btn btn-primary flex">Next</button>
+      </div>
+    </div>
+
+
+    <!-- Step 3: Payment Method -->
+    <div class="hidden py-5" id="step-3">
+      <h2 class="text-2xl font-bold mb-6">Payment Method</h2>
+      <div class="mb-5">
+        <label for="card-element" class="block mb-2 font-medium">Credit or debit card</label>
+        <div class="card-input-container border border-gray-300 rounded-md p-3 bg-white">
+          <div id="card-element" class="h-10"></div>
+        </div>
+        <div id="card-errors" class="text-red-500 mt-1 text-sm"></div>
+      </div>
+      <div class="flex justify-between mt-8">
+        <button type="button" id="prev-to-2" class="btn">Back</button>
+        <button type="button" id="next-to-4" class="btn btn-primary flex">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Review -->
+    <div class="hidden py-5" id="step-4">
+      <h2 class="text-2xl font-bold mb-6">Review Your Information</h2>
+      <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <div class="mb-5 border-b border-gray-100 pb-3">
+          <h3 class="text-lg font-semibold mb-2">Personal Information</h3>
+          <p><strong>Name:</strong> <span id="review-name" class="ml-2"></span></p>
+        </div>
+        <div class="mb-5 border-b border-gray-100 pb-3">
+          <h3 class="text-lg font-semibold mb-2">Amount</h3>
+          <p><strong>Total:</strong> <span class="ml-2">$<span id="review-amount"></span></span></p>
+        </div>
+        <div class="mb-5 border-b border-gray-100 pb-3">
+          <h3 class="text-lg font-semibold mb-2">Payment Method</h3>
+          <p> Credit Card <span id="review-card-last4" class="font-mono"></span></p>
+        </div>
+        <div class="mb-5 border-b border-gray-100 pb-3">
+          <h3 class="text-lg font-semibold mb-2">Email</h3>
+          <p> Email <span id="review-email" class="font-mono"></span></p>
+        </div>
+      </div>
+      <div class="flex justify-between mt-8">
+        <button type="button" id="prev-to-3" class="btn">Back</button>
+        <button type="button" id="submit-payment" class="btn btn-primary flex">Complete Payment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%= javascript_include_tag "https://js.stripe.com/v3/", "data-turbo-track": "reload" %>
+
+
+<!-- ----------------- -->
+
+<!-- Not working when move the js/controller files. Because of the required key from -->
+<!--[Rails.application.credentials.dig(:stripe, :publishable_key]  -->
+
+<!-- ----------------- -->
+
+<script>
+
+    function calculateTierAmount() {
+        const tier = parseInt(document.querySelector('input[name="tier"]:checked').value, 10) || 0;
+        const studentCount = parseInt(document.getElementById('student_count').value, 10) || 0;
+        document.getElementById('amount').value = tier * studentCount;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("Payment form script loaded");
+
+        // Step navigation listeners
+        document.getElementById('next-to-2').addEventListener('click', function () {
+            validateAndGoToStep(1, 2);
+        });
+
+        document.getElementById('prev-to-1').addEventListener('click', function () {
+            goToStep(1);
+        });
+
+        document.getElementById('next-to-3').addEventListener('click', function () {
+            validateAndGoToStep(2, 3);
+        });
+
+        document.getElementById('prev-to-2').addEventListener('click', function () {
+            goToStep(2);
+        });
+
+        document.getElementById('next-to-4').addEventListener('click', function () {
+            validateAndGoToStep(3, 4);
+        });
+
+        document.getElementById('prev-to-3').addEventListener('click', function () {
+            goToStep(3);
+        });
+
+        // Initialize Stripe on step 3 and variables for tracking progress
+        let currentStep = 1;
+        let stripe = null;
+        let card = null;
+        let cardComplete = false;
+        let last4 = null;
+
+        function validateAndGoToStep(currentStep, nextStep) {
+            if (validateStep(currentStep)) {
+                if (nextStep === 4) {
+                    updateReviewInformation();
+                }
+                goToStep(nextStep);
+            }
+        }
+
+
+        function goToStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('#payment-form-wizard > div').forEach(step => {
+                step.classList.add('hidden');
+                step.classList.remove('block');
+            });
+
+            // Show the target step
+            document.getElementById(`step-${stepNumber}`).classList.add('block');
+            document.getElementById(`step-${stepNumber}`).classList.remove('hidden');
+
+            // Update progress bar indicators
+            updateProgressBar(stepNumber);
+
+            // Initialize Stripe if going to step 3
+            if (stepNumber === 3) {
+                initializeStripe();
+            }
+
+            currentStep = stepNumber;
+        }
+
+        function updateProgressBar(stepNumber) {
+            // Reset all step indicators
+            const stepIndicators = document.querySelectorAll('#payment-wizard-container .flex-1 > div:first-child');
+            stepIndicators.forEach((indicator, index) => {
+                if (index + 1 < stepNumber) {
+                    indicator.classList.remove('bg-gray-200', 'text-gray-600', 'bg-blue-500', 'text-white');
+                    indicator.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                } else if (index + 1 === stepNumber) {
+                    indicator.classList.remove('bg-gray-200', 'text-gray-600', 'bg-green-500');
+                    indicator.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
+                } else {
+                    indicator.classList.remove('bg-blue-500', 'text-white', 'bg-green-500', 'border-green-500', 'border-blue-500');
+                    indicator.classList.add('bg-gray-200', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+
+
+        function validateStep(step) {
+            switch (step) {
+                case 1:
+                    const firstName = document.getElementById('first_name').value;
+                    const lastName = document.getElementById('last_name').value;
+                    const email = document.getElementById('email').value;
+                    if (!firstName || !lastName || !email) {
+                        alert('Please fill in all required fields');
+                        return false;
+                    }
+
+                    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (!emailRegex.test(email)) {
+                        alert('Please enter a valid email address');
+                        return false;
+                    }
+
+
+                    return true;
+                case 2:
+                    const amount = document.getElementById('amount').value;
+                    if (!amount || amount <= 0) {
+                        alert('Please enter a valid amount');
+                        return false;
+                    }
+                    return true;
+                case 3:
+                    if (!cardComplete) {
+                        alert('Please complete the card information');
+                        return false;
+                    }
+                    return true;
+                default:
+                    return true;
+            }
+        }
+
+        function initializeStripe() {
+            const cardElement = document.getElementById('card-element');
+            if (!cardElement) return;
+
+            const publishableKey = "<%= Rails.application.credentials.dig(:stripe, :publishable_key) %>";
+            if (!stripe) {
+                stripe = Stripe(publishableKey);
+            }
+
+            if (card) {
+                card.destroy();
+            }
+
+            const elements = stripe.elements();
+            card = elements.create("card");
+
+
+
+            card.mount("#card-element");
+
+            card.addEventListener('change', (event) => {
+                const displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                    cardComplete = false;
+                } else {
+                    displayError.textContent = '';
+                    cardComplete = event.complete;
+                    if (event.complete && event.value?.card?.last4) {
+                        last4 = event.value.card.last4;
+                        console.log(last4);
+                    }
+                }
+            });
+        }
+
+        function updateReviewInformation() {
+            const firstName = document.getElementById('first_name').value;
+            const lastName = document.getElementById('last_name').value;
+            const amount = document.getElementById('amount').value;
+            const email = document.getElementById('email').value;
+
+            document.getElementById('review-name').textContent = `${firstName} ${lastName}`;
+            // Remove the division by 100 to display correct amount
+            document.getElementById('review-amount').textContent = amount;
+            document.getElementById('review-email').textContent = email;
+
+            if (last4) {
+                document.getElementById('review-card-last4').textContent = "****" + last4;
+            }
+        }
+
+
+
+        // Handle payment form submission
+        document.getElementById('submit-payment').addEventListener('click', async function () {
+            const firstName = document.getElementById('first_name').value;
+            const lastName = document.getElementById('last_name').value;
+            const amount = document.getElementById('amount').value;
+            const email = document.getElementById('email').value;
+
+            const submitButton = document.getElementById('submit-payment');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+
+            try {
+                const {paymentMethod, error} = await stripe.createPaymentMethod({
+                    type: "card",
+                    card: card,
+                    billing_details: {
+                        name: `${firstName} ${lastName}`,
+
+                    }
+                });
+
+                if (error) {
+                    alert(error.message);
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Complete Payment';
+                    return;
+                }
+
+                const response = await fetch("/payments", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": "<%= form_authenticity_token %>"
+                    },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        amount: parseInt(amount),
+                        payment_method_id: paymentMethod.id,
+                        email : email
+                    }),
+                });
+
+                if (response.ok) {
+                    window.location.href = "/payments/success";
+                } else {
+                    alert("Payment failed!");
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Complete Payment';
+                }
+            } catch (e) {
+                alert("An unexpected error occurred: " + e.message);
+                submitButton.disabled = false;
+                submitButton.textContent = 'Complete Payment';
+            }
+        });
+    });
+
+
+</script>

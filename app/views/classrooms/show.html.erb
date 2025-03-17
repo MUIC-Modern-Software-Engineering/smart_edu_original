@@ -1,0 +1,39 @@
+<% content_for :title, "Classroom #{@classroom.class_id}" %>
+
+<h1 class="text-3xl font-bold text-center mb-6 mt-4">Students in Classroom <%= @classroom.class_id %></h1>
+<div class="mx-auto bg-white p-6 rounded-lg shadow">
+  <%= form_with url: attendances_path, method: :post, remote: true do %>
+    <table>
+      <thead>
+      <tr>
+        <th class="text-gray-1000 text-l">ID</th>
+        <th class="text-gray-1000 text-l">Name</th>
+        <th class="text-gray-1000 text-l">Check-In</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @students.each do |student| %>
+        <tr class="text-lg font-medium" data-content="<%= student.name %>">
+          <td class="text-gray-800"><%= student.id %></td>
+          <td class="text-gray-800"><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
+          <td>
+            <button class="check-in-btn btn btn-m" data-student-id="<%= student.id %>">
+              Check-In
+            </button>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+
+<div class="text-center mt-6">
+  <%= link_to "Back to Classrooms", by_grade_classrooms_path(@classroom.class_id.first), class: "text-blue-500 hover:underline" %>
+</div>
+
+<%= javascript_include_tag "controllers/classroom_checkin_controller" %>
+
+<script>
+    window.attendancesPath = "<%= attendances_path %>";
+</script>

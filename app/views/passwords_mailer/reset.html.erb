@@ -1,4 +1,9 @@
-<p>
-  You can reset your password within the next 15 minutes on
-  <%= link_to "this password reset page", edit_password_url(@user.password_reset_token) %>.
+  <p>Hello <%= @user.first_name %>,</p>
+
+  <p>We received a request to reset your password. To proceed, please click the link below within the next 15 minutes: </p>
+  <p><%= link_to "Reset Your Password", edit_password_url(@user.password_reset_token) %>.</p>
+  <p>If you did not request this change, please ignore this email. Your account will remain secure.</p>
+
+  <p>Best regards,</p>
+  <p>School Admin Team</p>
 </p>

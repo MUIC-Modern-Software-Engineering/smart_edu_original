@@ -1,5 +1,21 @@
-<div class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-r from-blue-500 to-purple-500">
-  <div class="bg-white bg-opacity-75 p-8 rounded-lg text-center min-w-[32rem] shadow-2xl shadow-sky-950">
-    <%= yield %>
+<div class="min-h-screen flex flex-col md:flex-row items-center justify-center px-4 pr-4 bg-gradient-to-r from-[#FFEAD2] to-[#8294C4]">
+  <!-- Logo Text (Left on Desktop, Top on Mobile) -->
+  <div class="flex justify-center w-full md:w-1/2 px-6 pb-4">
+    <div class="max-w-md w-full text-center md:text-left">
+      <p class="text-[#1f2937] text-6xl font-bold">Welcome to</p>
+      <div class="text-[#4A4A4A] text-6xl md:text-[7rem] font-bold leading-none">
+        <%= render "shared/logo_text" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Box (Right on Desktop, Bottom on Mobile) -->
+  <div class="flex justify-start w-full md:w-1/2 px-6">
+    <div class="max-w-md w-full">
+      <%= render "shared/notice" %>
+      <div class="student-card max-w-md w-full p-8 bg-white rounded-2xl shadow-2xl">
+        <%= yield %>
+      </div>
+    </div>
   </div>
 </div>

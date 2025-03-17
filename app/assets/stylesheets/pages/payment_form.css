@@ -1,0 +1,85 @@
+/* payment_form.css */
+.payment-form-container {
+    @apply max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg;
+}
+
+.progress-bar {
+    @apply flex mb-8 relative;
+}
+
+.progress-bar::before {
+    content: "";
+    @apply absolute top-1/2 h-0.5 w-full bg-gray-300 -z-10;
+}
+
+.step {
+    @apply flex-1 text-center relative z-0
+    bg-white rounded-full w-8 h-8
+    flex items-center justify-center mx-auto
+    text-gray-500 border-2 border-gray-300
+    text-sm font-medium shadow-sm;
+}
+
+.step.active {
+    @apply text-white bg-blue-600 border-blue-600;
+}
+
+.step.completed {
+    @apply text-white bg-green-500 border-green-500;
+}
+
+.step-content {
+    @apply hidden py-5;
+}
+
+.step-content.active {
+    @apply block animate-fadeIn;
+}
+
+.form-group {
+    @apply mb-5;
+}
+
+.form-control {
+    @apply w-full p-3 border border-gray-300 rounded-md text-base
+    focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+    transition duration-200;
+}
+
+.form-actions {
+    @apply flex justify-between mt-8;
+}
+
+.btn {
+    @apply py-3 px-6 border-none rounded-md cursor-pointer text-base
+    font-semibold transition-all duration-200 shadow-sm;
+}
+
+.btn:hover {
+    @apply shadow-md;
+}
+
+.next-step {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+.prev-step {
+    @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+}
+
+.submit-btn {
+    @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+.error-message {
+    @apply text-red-500 mt-1 text-sm;
+}
+
+.review-section {
+    @apply mb-5 border-b border-gray-100 pb-3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

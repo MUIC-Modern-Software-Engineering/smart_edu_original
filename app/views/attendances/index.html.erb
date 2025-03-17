@@ -3,11 +3,14 @@
 <div class="flex justify-end px-2">
   <%= link_to "New Attendance", new_attendance_path, class: "btn btn-primary" %>
 </div>
-<div class="flex justify-center items-center">
-  <%== pagy_nav(@pagy) %>
-</div>
-<div id="attendances" class="overflow-x-auto m-2">
-  <table class="table table-zebra">
+
+<!--<div class="flex justify-center items-center">-->
+  <%#== pagy_nav(@pagy) %>
+<!--</div>-->
+
+<div class="overflow-x-auto m-2">
+  <table id="List-Attendance" class="w-full text-left border-separate border-spacing-0 bg-white shadow-md rounded-2xl overflow-hidden hover" data-turbo="false">
+
     <thead>
       <tr>
         <th>Student ID</th>
@@ -22,6 +25,7 @@
           <td><%= attendance.student_id %></td>
           <td><%= attendance.timestamp %></td>
           <td><%= attendance.user_id %></td>
+
           <td>
             <%= link_to attendance, class: "hover:text-blue-500 text-blue-700" do %>
               <i class="fas fa-eye" title="Show"></i> View
@@ -35,6 +39,26 @@
     </tbody>
   </table>
 </div>
-<div class="flex justify-center items-center">
-  <%== pagy_nav(@pagy) %>
-</div>
+
+<!--<div class="flex justify-center items-center">-->
+  <%#== pagy_nav(@pagy) %>
+<!--</div>-->
+
+<script>
+    document.addEventListener("turbo:load", function () {
+        const tableId = "#List-Attendance";
+
+        if (!$.fn.DataTable.isDataTable(tableId)) {
+            $(tableId).DataTable({
+                responsive: true,
+                order:[[1, "desc"]],
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search students...",
+                },
+
+            });
+        }
+    });
+
+</script>

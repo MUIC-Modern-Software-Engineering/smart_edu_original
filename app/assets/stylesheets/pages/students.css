@@ -1,0 +1,75 @@
+@layer components {
+    .student-card {
+        @apply relative bg-white rounded-xl p-6 mx-auto shadow-[0px_4px_15px_rgba(0,0,0,0.2),0px_-4px_15px_rgba(0,0,0,0.2)];
+        margin-bottom: 2rem;
+    }
+
+    .card-body {
+        @apply flex flex-col gap-[0.10rem] p-[var(--padding-card,2rem)];
+    }
+
+    .student-title {
+        @apply text-2xl font-bold text-center mb-4;
+    }
+
+    .student-btn-show {
+        @apply text-white bg-gray-500 hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium ;
+    }
+
+    .student-btn-secondary {
+        @apply bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition;
+    }
+
+    .student-submit {
+        @apply bg-blue-500 text-white btn w-full mt-2 hover:bg-blue-600 transition;
+    }
+
+    .back-btn {
+        @apply bg-[#FFEAD2] text-black hover:bg-[#e6d3bc];
+    }
+}
+
+
+/*For the List attendance and Student Page (Table Design*/
+
+#students-table tbody tr:hover {
+    background-color: #F9FAFB; /* Light hover */
+}
+
+/* Custom Table CSS */
+#students-table {
+    border-collapse: collapse;
+}
+
+#students-table thead th {
+    background: #1f2937;
+    color: white;
+    text-align: left;
+}
+
+#students-table tr {
+    transition: background-color 0.2s ease;
+}
+
+#students-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+
+#List-Attendance {
+    border-collapse: collapse;
+}
+
+#List-Attendance thead th {
+    background: #1f2937;
+    color: white;
+    text-align: left;
+}
+
+#List-Attendance tr {
+    transition: background-color 0.2s ease;
+}
+
+#List-Attendance tr:hover {
+    background-color: #f1f5f9;
+}

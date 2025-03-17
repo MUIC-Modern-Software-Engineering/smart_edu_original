@@ -1,44 +1,58 @@
-<div class="flex flex-row justify-around items-start mt-4">
+<% if notice.present? %>
+  <div class="alert alert-info w-fit mx-auto mb-4">
+    <%= notice %>
+  </div>
+<% end %>
+
+<div class="flex flex-row justify-around items-start w-full mt-4">
   <div class="bg-accent p-4 rounded-md w-fit">
     <h1 class="text-xl">Students</h1>
     <table class="table table-zebra p-20">
       <thead>
-        <tr>
-          <th>Student Name</th>
-          <th>Action</th>
-        </tr>
+      <tr>
+        <th>Student Name</th>
+        <th>Action</th>
+      </tr>
       </thead>
       <tbody>
-        <% @students.each do |student| %>
-          <tr class="hover" data-content="<%= student.name %>">
-            <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
-            <td><%= submit_tag "Check-in", name: "check_in", 
-              formaction: attendances_path(student_id: student.id),
-              formmethod: :post,
-              class: "btn btn-primary btn-xs",
-              data: {turbo_frame: "students" }%></td>
-          </tr>
-        <% end %>
+      <% @students.each do |student| %>
+        <tr class="hover" data-content="<%= student.name %>">
+          <td><%= highlight(student.name, params.dig(:q, :name_cont)) %></td>
+          <td>
+            <button class="check-in-btn btn btn-m" data-student-id="<%= student.id %>">
+              Check-In
+            </button>
+          </td>
+        </tr>
+      <% end %>
       </tbody>
     </table>
   </div>
+
+  <!-- Checked-in Students Table -->
   <div class="bg-yellow-200 p-4 rounded-md w-fit">
     <h1 class="text-xl">Checked-in Students</h1>
     <table id="latest-attendances" class="table table-zebra p-20">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Time</th>
-        </tr>
+      <tr>
+        <th>Name</th>
+        <th>Time</th>
+      </tr>
       </thead>
       <tbody>
-        <% @attendances.each do |attendance| %>
-          <tr class="hover">
-            <td><%= attendance.student.name %></td>
-            <td><%= attendance.timestamp.strftime('%Y-%m-%d %H:%M') %></td>
-          </tr>
-        <% end %>
+      <% @attendances.each do |attendance| %>
+        <tr class="hover">
+          <td><%= attendance.student.name %></td>
+          <td><%= attendance.timestamp.strftime('%Y-%m-%d %H:%M') %></td>
+        </tr>
+      <% end %>
       </tbody>
     </table>
   </div>
 </div>
+
+<%= javascript_include_tag "controllers/classroom_checkin_controller" %>
+
+<script>
+    window.attendancesPath = "<%= attendances_path %>";
+</script>

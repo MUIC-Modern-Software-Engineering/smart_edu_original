@@ -6,6 +6,7 @@ module.exports = {
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
     "./app/views/**/*.{erb,haml,html,slim}",
+    './app/assets/stylesheets/**/*.css'
   ],
   theme: {
     extend: {
@@ -24,4 +25,5 @@ module.exports = {
     themes: ["light", "dark", "coporate", "pastel"],
     darkTheme: "coporate", // name of one of the included themes for dark mode
   },
+
 };
