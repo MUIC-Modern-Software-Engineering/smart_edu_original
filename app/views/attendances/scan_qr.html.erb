@@ -1,0 +1,18 @@
+<%= render "shared/notice" %>
+
+<% content_for :title, "Scan QR Code" %>
+
+<div id="qr-container">
+  <video id="preview"></video>
+  <div id="qr-frame">
+    <div id="scan-line"></div>
+  </div>
+</div>
+
+<!-- CSRF meta tag -->
+<meta name="csrf-token" content="<%= form_authenticity_token %>">
+
+<!-- Instascan library -->
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+<%= javascript_include_tag "controllers/qr_scanner" %>

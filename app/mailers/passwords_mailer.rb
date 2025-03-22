@@ -1,6 +1,10 @@
 class PasswordsMailer < ApplicationMailer
+  # default from: "smarteduccc@gmail.com"
   def reset(user)
     @user = user
-    mail subject: "Reset your password", to: user.email_address
+    mail(
+      to: @user.personal_email,
+      subject: "Reset your password"
+    )
   end
 end

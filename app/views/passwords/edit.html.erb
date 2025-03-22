@@ -1,9 +1,14 @@
-<h1>Update your password</h1>
+<%= render "shared/single_box" do %>
+  <%#= render "shared/notice" %>
+  <div>
+    <h1 class="text-3xl font-bold pb-4">Update your password</h1>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-
-<%= form_with url: password_path(params[:token]), method: :put do |form| %>
-  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
-  <%= form.submit "Save" %>
+    <%= form_with url: password_path(params[:token]), method: :put do |form| %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 20, class: "input input-bordered input-primary w-full mt-2" %>
+      <br>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 20, class: "input input-bordered input-primary w-full mt-2" %>
+      <br>
+      <%= form.submit "Save password", class: "btn btn-primary btn-wide mt-4 w-full" %>
+    <% end %>
+  </div>
 <% end %>

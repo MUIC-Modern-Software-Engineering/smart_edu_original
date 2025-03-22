@@ -1,21 +1,79 @@
 <% content_for :title, "Dashboard" %>
-<div class="flex items-center justify-center min-h-[calc(100vh-64px)]">
-  <div class="stats shadow text-3xl">
-    <div class="stat">
-      <div class="stat-figure text-secondary">
-        <i class="fa-solid fa-user-graduate"></i>
+
+<div class="container mx-auto py-10">
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Total Students -->
+    <% if !current_user.student? %>
+      <%= link_to students_path, class: "block" do %>
+        <div class="bg-white shadow-lg rounded-xl p-6 text-center border border-gray-200 hover:bg-[#DCEAF7] transition cursor-pointer ease-in-out">
+          <i class="fa-solid fa-user-graduate text-blue-600 text-6xl mb-3"></i>
+          <h3 class="text-lg font-semibold text-gray-700">Total Students</h3>
+          <p class="text-5xl font-bold text-gray-900"><%= number_with_delimiter(@total_students) %></p>
+          <p class="text-gray-500 mt-1">
+            Active: <span class="text-green-500 font-semibold"><%= @active_students %></span>
+            | Inactive: <span class="text-red-500 font-semibold"><%= @inactive_students %></span>
+          </p>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="bg-white shadow-lg rounded-xl p-6 text-center border border-gray-200">
+        <i class="fa-solid fa-user-graduate text-blue-600 text-6xl mb-3"></i>
+        <h3 class="text-lg font-semibold text-gray-700">Total Students</h3>
+        <p class="text-5xl font-bold text-gray-900"><%= number_with_delimiter(@total_students) %></p>
+        <p class="text-gray-500 mt-1">
+          Active: <span class="text-green-500 font-semibold"><%= @active_students %></span>
+          | Inactive: <span class="text-red-500 font-semibold"><%= @inactive_students %></span>
+        </p>
       </div>
-      <div class="stat-title">Students</div>
-      <div class="stat-value"><%= number_with_delimiter(@student_count) %></div>
-      <div class="stat-desc">Total Students</div>
-    </div>
-    <div class="stat">
-      <div class="stat-figure text-accent">
-        <i class="fa-solid fa-user-tie"></i>
+    <% end %>
+
+    <!-- Total Teachers -->
+    <% if !current_user.student? %>
+      <%= link_to teachers_path, class: "block" do %>
+        <div class="bg-white shadow-lg rounded-xl p-6 text-center border border-gray-200 hover:bg-[#DCEAF7] transition cursor-pointer ease-in-out">
+          <i class="fa-solid fa-chalkboard-teacher text-yellow-500 text-6xl mb-3"></i>
+          <h3 class="text-lg font-semibold text-gray-700">Total Teachers</h3>
+          <p class="text-5xl font-bold text-gray-900"><%= number_with_delimiter(@total_teachers) %></p>
+          <p class="text-gray-500 mt-1">Teachers in this school</p>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="bg-white shadow-lg rounded-xl p-6 text-center border border-gray-200">
+        <i class="fa-solid fa-chalkboard-teacher text-yellow-500 text-6xl mb-3"></i>
+        <h3 class="text-lg font-semibold text-gray-700">Total Teachers</h3>
+        <p class="text-5xl font-bold text-gray-900"><%= number_with_delimiter(@total_teachers) %></p>
+        <p class="text-gray-500 mt-1">Teachers in this school</p>
       </div>
-      <div class="stat-title">Total Check Ins</div>
-      <div class="stat-value"><%= number_with_delimiter(@attendance_count) %></div>
-      <div class="stat-desc">Last Check In <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %></div>
+    <% end %>
+
+    <!-- Total Check-Ins -->
+    <div class="bg-white shadow-lg rounded-xl p-6 text-center border border-gray-200">
+      <i class="fa-solid fa-user-check text-green-500 text-6xl mb-3"></i>
+      <h3 class="text-lg font-semibold text-gray-700">Check-Ins</h3>
+      <p class="text-4xl font-bold text-gray-900">
+        <%= number_with_delimiter(@checkins_today) %> <span class="text-base text-gray-600 pr-4">today </span>
+        <span class="text-lg text-gray-900 pr-4">|</span>
+        <%= number_with_delimiter(@checkins_this_month) %> <span class="text-base text-gray-600">this month</span>
+      </p>
+      <p class="text-gray-500 mt-1">
+        Last Check-in: <%= @last_checkin.nil? ? 'N/A' : time_ago_in_words(@last_checkin) %> ago
+      </p>
     </div>
+
+    <!-- Attendance Rate -->
+    <div class="bg-white shadow-lg rounded-xl p-6 text-center border border-gray-200">
+      <i class="fa-solid fa-chart-line text-purple-500 text-6xl mb-3"></i>
+      <h3 class="text-lg font-semibold text-gray-700">Attendance Rate</h3>
+      <p class="text-4xl font-bold text-gray-900">
+        <%= @attendance_rate_today %>% <span class="text-base text-gray-600 pr-4">today</span>
+        <span class="text-lg text-gray-900 pr-4">|</span>
+        <%= @attendance_rate_month %>% <span class="text-base text-gray-600 pr-4">this month</span>
+        <span class="text-lg text-gray-900 pr-4">|</span>
+        <%= @attendance_rate %>% <span class="text-base text-gray-600">overall</span>
+      </p>
+      <p class="text-gray-500 mt-1">Based on active students</p>
+    </div>
+
   </div>
 </div>

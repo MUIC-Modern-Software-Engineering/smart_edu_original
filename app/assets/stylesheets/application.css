@@ -8,4 +8,7 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
- 
+
+
+@import "pages/students.css";
+@import "pages/approval.css";

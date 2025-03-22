@@ -1,27 +1,96 @@
 <div class="drawer">
-  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content">
+  <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
+  <div class="drawer-content mt-10">
     <%= yield %>
   </div>
-  <div class="drawer-side">
+  <div class="drawer-side z-50">
     <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-      <!-- Sidebar content here -->
-      <li><%= link_to root_path do %>
+    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 space-y-2">
+
+      <!-- Dashboard -->
+      <li>
+        <%= link_to home_index_path, class: "flex items-center gap-2" do %>
           <i class="fas fa-tachometer-alt"></i> Dashboard
-        <% end %></li>
-      <li><%= link_to students_path do %>
-          <i class="fas fa-user-graduate"></i> Manage Student
-        <% end %></li>
-      <li><%= link_to new_attendance_path do %>
-          <i class="fas fa-qrcode"></i> Add Attendance
-        <% end %></li>
-      <li><%= link_to attendances_path do %>
-          <i class="fas fa-list"></i> List Attendances
-        <% end %></li>
-      <li><%= link_to session_path, data: {turbo_method: :delete} do %>
+        <% end %>
+      </li>
+
+      <!-- Profile -->
+        <li>
+          <%= link_to profile_path, class: "flex items-center gap-2" do %>
+            <i class="fas fa-user"></i> Profile
+          <% end %>
+        </li>
+
+      <!-- Management Section -->
+      <% if current_user&.admin? || current_user&.teacher? || current_user&.principal? %>
+        <li>
+          <details>
+            <summary class="font-semibold flex items-center gap-2">
+              <i class="fas fa-users-cog"></i> Management
+            </summary>
+            <ul class="pl-4">
+              <% if current_user&.can_manage_teachers? %>
+                <li><%= link_to users_path, class: "flex items-center gap-2" do %>
+                    <i class="fas fa-user-shield"></i> Manage Users
+                  <% end %></li>
+              <% end %>
+              <li><%= link_to students_path, class: "flex items-center gap-2" do %>
+                  <i class="fas fa-user-graduate"></i> Manage Students
+                <% end %></li>
+              <% if current_user&.can_manage_teachers? %>
+                <li><%= link_to teachers_path, class: "flex items-center gap-2" do %>
+                    <i class="fas fa-chalkboard-teacher"></i> Manage Teachers
+                  <% end %></li>
+              <% end %>
+            </ul>
+          </details>
+        </li>
+      <% end %>
+
+      <!-- Attendance Section -->
+      <% if current_user&.admin? || current_user&.teacher? || current_user&.principal? || current_user&.system? %>
+        <li>
+          <details>
+            <summary class="font-semibold flex items-center gap-2">
+              <i class="fas fa-clipboard-list"></i> Attendance
+            </summary>
+            <ul class="pl-4">
+              <li><%= link_to new_attendance_path, class: "flex items-center gap-2" do %>
+                  <i class="fas fa-qrcode"></i> Add Attendances
+                <% end %></li>
+              <li><%= link_to attendances_path, class: "flex items-center gap-2" do %>
+                  <i class="fas fa-list"></i> List Attendances
+                <% end %></li>
+            </ul>
+          </details>
+        </li>
+      <% end %>
+
+      <!-- Scan QR Section -->
+      <% if(current_user&.system? || current_user&.principal? || current_user&.teacher?) && current_user&.school.tier == 2 %>
+        <li>
+          <%= link_to scan_qr_attendances_path, class: "flex items-center gap-2" do %>
+            <i class="fas fa-qrcode"></i> Scan QR Code
+          <% end %>
+        </li>
+      <% end %>
+
+      <!-- Grades Section -->
+      <li>
+        <% if current_user&.can_manage_teachers? || @classroom.present? %>
+          <%= link_to grading_classroom_path(@classroom || Classroom.first), class: "flex items-center gap-2" do %>
+            <i class="fas fa-graduation-cap"></i> Grades
+          <% end %>
+        <% end %>
+      </li>
+
+      <!-- Logout -->
+      <li>
+        <%= link_to logout_path, data: { turbo_method: :delete, confirm: "Are you sure you want to log out?" }, class: "flex items-center gap-2 text-red-500 hover:text-red-700" do %>
           <i class="fas fa-sign-out-alt"></i> Logout
-        <% end %></li>
+        <% end %>
+      </li>
+
     </ul>
   </div>
 </div>

@@ -1,12 +1,16 @@
+<%= render "shared/notice" %>
+
 <% content_for :title, "Editing student" %>
 
-<h1>Editing student</h1>
+<div class="student-card max-w-md mx-auto mt-10">
+  <div class="mt-4">
+    <%= link_to students_path, class: "entity-btn back-btn text-black" do %>
+      <i class="fas fa-arrow-left"></i> Back
+    <% end %>
+  </div>
 
-<%= render "form", student: @student %>
-
-<br>
-
-<div>
-  <%= link_to "Show this student", @student %> |
-  <%= link_to "Back to students", students_path %>
+  <div class="mt-4">
+    <h1 class="text-2xl font-bold mb-4 text-center">Editing Student</h1>
+    <%= render "form", student: @student %>
+  </div>
 </div>

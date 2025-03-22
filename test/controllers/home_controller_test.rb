@@ -3,7 +3,7 @@ require "test_helper"
 class HomeControllerTest < ActionDispatch::IntegrationTest
   test "should get index when logged in" do
     sign_in
-    get root_path
+    get home_index_url
     assert status, 200
     assert_includes @response.body, "Total Students"
   end
@@ -15,8 +15,8 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   # private
 
-  # def sign_in
-  #   user = users(:one)
-  #   post session_url, params: { email_address: user.email_address, password: "password" }
-  # end
+  def sign_in
+    user = User.find_by!(role: "principal")
+    post session_url, params: { email_address: user.email_address, password: "password123" }
+  end
 end

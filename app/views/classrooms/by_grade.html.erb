@@ -1,0 +1,26 @@
+<h1 class="text-3xl font-bold text-center mb-6">Classrooms for Grade <%= @grade %></h1>
+
+
+<!--TODO: Fix this -->
+<div class="text-center mb-6">
+  <%= link_to "Back to Classrooms", classrooms_path, class: "text-blue-500 hover:underline" %>
+</div>
+<!--TODO: Fix this -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @classrooms.each do |classroom| %>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow">
+      <%= link_to classroom_path(classroom), class: "block p-6" do %>
+        <h2 class="text-center text-2xl font-bold text-gray-700">Classroom <%= classroom.class_id %></h2>
+      <% end %>
+
+      <!-- Show students in the classroom -->
+      <div class="p-4">
+        <% if classroom.students.any? %>
+        <% else %>
+          <p class="text-gray-500">No students in this classroom.</p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

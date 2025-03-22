@@ -1,13 +1,13 @@
 # Name of your application. Used to uniquely configure containers.
-service: smart_edu
+service: smartedu
 
 # Name of the container image.
-image: piti118/smartedu_a
+image: kanladaporn/smartedu
 
 # Deploy to these servers.
 servers:
   web:
-    - 178.128.54.253
+    - ccc.buggycode.space
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -19,13 +19,13 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  host: aaa.buggycode.space
+  host: ccc.buggycode.space
 
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: piti118
+  username: kanladaporn
 
   # Always use an access token rather than real password when possible.
   password:
@@ -39,6 +39,8 @@ env:
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
     SOLID_QUEUE_IN_PUMA: true
+    RAILS_ENV: production
+    PORT: 3000
 
     # Set number of processes dedicated to Solid Queue (default: 1)
     # JOB_CONCURRENCY: 3
@@ -65,7 +67,7 @@ aliases:
 # Use a persistent storage volume for sqlite database files and local Active Storage files.
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
-  - "smart_edu_storage:/rails/storage"
+  - "smartedu_storage:/rails/storage"
 
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
@@ -89,7 +91,7 @@ builder:
 
 # Use a different ssh user than root
 # ssh:
-#   user: app
+#  user: app
 
 # Use accessory services (secrets come from .kamal/secrets).
 # accessories:

@@ -1,10 +1,29 @@
-<div class="p-4 card w-1/2 shadow-xl bg-neutral-200">
+<div>
   <div class="card-body">
-    <h2 class="card-title">Name: <%= student.name %> </h2>
-    <p>ID: <%= student.id %></p>
-    <p>UID: <%= student.uid %></p>
+    <h2 class="card-title text-xl font-bold"><%= student.name %></h2>
+    <p class="text-gray-700"><span class="font-semibold">ID:</span> <%= student.id %></p>
+    <p class="text-gray-700"><span class="font-semibold">Grade:</span> <%= student.grade %></p>
+    <p class="text-gray-700"><span class="font-semibold">Classroom:</span> <%= student.classroom_id %></p>
+    <p class="text-gray-700"><span class="font-semibold">Student Email:</span> <%= student.student_email_address %></p>
+    <p class="text-gray-700"><span class="font-semibold">Parent Email:</span> <%= student.parent_email_address %></p>
+
+    <!-- Small Clickable QR Code -->
+    <figure class="p-5 flex justify-center">
+      <%= link_to "#qr-modal", class: "cursor-pointer", data: { turbo_frame: "qr-modal" } do %>
+        <%= generate_qr_code(@student) %>
+      <% end %>
+    </figure>
+
+    <div class="mt-2 flex justify-center space-x-4">
+      <%= link_to edit_student_path(@student), class: "entity-btn entity-btn-secondary text-center" do %>
+        <i class="fas fa-edit"></i> Edit
+      <% end %>
+      <button class="entity-btn entity-btn-delete"
+              onclick="confirmArchive(<%= @student.id %>, '<%= @student.name %>', '/students')">
+        <i class="fas fa-trash"></i> Archive
+      </button>
+    </div>
   </div>
-  <figure class="p-5">
-    <%= raw RQRCode::QRCode.new(student.uid).as_svg %>
-  </figure>
 </div>
+
+<%= javascript_include_tag "controllers/archive_entity_controller", "data-turbo-track": "reload" %>

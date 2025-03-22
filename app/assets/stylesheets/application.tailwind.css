@@ -1,3 +1,6 @@
+@import "pages/students.css";
+@import "pages/approval.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,23 +15,52 @@
 
 */
 .pagy {
-  @apply flex space-x-1 font-semibold text-sm text-gray-500;
-  a:not(.gap) {
-    @apply block rounded-lg px-3 py-1 bg-gray-200;
-    &:hover {
-      @apply bg-gray-300;
+    @apply flex space-x-1 font-semibold text-sm text-gray-500;
+
+    a:not(.gap) {
+        @apply block rounded-lg px-3 py-1 bg-gray-200;
+
+        &:hover {
+            @apply bg-gray-300;
+        }
+
+        &:not([href]) { /* disabled links */
+            @apply text-gray-300 bg-gray-100 cursor-default;
+        }
+
+        &.current {
+            @apply text-white bg-gray-400;
+        }
     }
-    &:not([href]) { /* disabled links */
-      @apply text-gray-300 bg-gray-100 cursor-default;
+
+    label {
+        @apply inline-block whitespace-nowrap bg-gray-200 rounded-lg px-3 py-0.5;
+
+        input {
+            @apply bg-gray-100 border-none rounded-md;
+        }
     }
-    &.current {
-      @apply text-white bg-gray-400;
+}
+
+/* Improved Table Styling */
+table {
+    @apply w-full border-collapse border border-gray-300 shadow-md rounded-lg text-gray-800;
+}
+
+th, td {
+    @apply py-4 px-6 border-b border-gray-300 text-center;
+}
+
+/* Custom Toast Notification */
+@keyframes fade {
+    from {
+        opacity: 1;
     }
-  }
-  label {
-    @apply inline-block whitespace-nowrap bg-gray-200 rounded-lg px-3 py-0.5;
-    input {
-      @apply bg-gray-100 border-none rounded-md;
+    to {
+        opacity: 0;
     }
-  }
+}
+
+.animate-fade {
+    animation: fade 0.5s ease-in-out;
 }
