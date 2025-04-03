@@ -15,11 +15,14 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
+    <%= render "shared/notif" %>
     <% if authenticated? %>
       <%= render "layouts/nav"%>
       <%= render "layouts/drawer" do %>
@@ -28,4 +31,16 @@
     <% else%>
       <%= yield %>
     <% end %>
+    <!-- filepath: /c:/Users/Kevin/Desktop/SoftEn/smart_edu_team2/app/views/layouts/application.html.erb -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (!document.cookie.includes("timezone")) {
+        document.cookie = "timezone=" + timezone + "; path=/";
+        location.reload(); // Reload to apply timezone in Rails
+      }
+    });
+  </script>
+  
+</body>
   </html>

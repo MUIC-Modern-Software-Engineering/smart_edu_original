@@ -1,15 +1,16 @@
-<% content_for :title, "New attendance" %>
+<% content_for :title, "New Attendance" %>
+
 <% if notice.present? %>
-<div class="alert alert-info w-fit mx-auto mb-4">
-  <%= notice %>
-</div>
+  <div class="alert alert-info w-fit mx-auto mb-4">
+    <%= notice %>
+  </div>
 <% end %>
 <%= search_form_for @q, url: new_attendance_path, data: { controller: "submit", turbo_frame: "students" } do |f| %>
-<div class="p-5 bg-neutral-400 flex justify-center">
-  <%= f.text_field :name_cont, placeholder: "Search by student name...", data: { action: "input->submit#submit" }, 
-      class: "input input-bordered w-full max-w-xs" %>
-</div>
-<turbo_frame id="students">
-  <%= render "attendances/attendance_scan_table" %>
-</turbo_frame>
+  <div class="p-5 bg-neutral-400 flex justify-center">
+    <%= f.text_field :name_cont, placeholder: "Search by student name...", data: { action: "input->submit#submit" }, 
+        class: "input input-bordered w-full max-w-xs" %>
+  </div>
+  <turbo_frame id="students">
+    <%= render "attendances/attendance_scan_table" %>
+  </turbo_frame>
 <% end %>

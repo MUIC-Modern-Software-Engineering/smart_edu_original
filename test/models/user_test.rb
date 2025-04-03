@@ -3,14 +3,28 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
+#  discarded_at    :datetime
 #  email_address   :string           not null
+#  first_name      :string
+#  is_active       :boolean          default(TRUE)
+#  last_name       :string
 #  password_digest :string           not null
+#  role            :string           default("unassigned")
+#  uuid            :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  school_id       :integer
 #
 # Indexes
 #
+#  index_users_on_discarded_at   (discarded_at)
 #  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_school_id      (school_id)
+#  index_users_on_uuid           (uuid) UNIQUE
+#
+# Foreign Keys
+#
+#  school_id  (school_id => schools.id)
 #
 require "test_helper"
 
@@ -45,5 +59,10 @@ class UserTest < ActiveSupport::TestCase
     assert user.save
     user = User.new email_address: "a222@bbb.com", password: "password"
     assert_not user.save
+  end
+
+  test "should not have empty uuid on create" do
+    user = User.new email_address: "anewuser@abc.com", password: "5555555555", uuid: SecureRandom.uuid
+    assert user.uuid.present?
   end
 end

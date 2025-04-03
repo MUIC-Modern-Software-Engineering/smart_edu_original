@@ -1,0 +1,105 @@
+<h1>QR Code Scanner</h1>
+<div class="scanner-container">
+  <button id="start-btn">Start Camera</button>
+  <button id="stop-btn">Stop Camera</button>
+  <div id="reader"></div>
+  <p>Scanned Result: <span id="result"></span></p>
+</div>
+
+<!-- Include html5-qrcode library -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+let scanner;
+
+function startScanner() {
+  if (!scanner) {
+    scanner = new Html5Qrcode("reader");
+  }
+
+  scanner.start(
+    { facingMode: "environment" }, 
+    { fps: 10, qrbox: 250 },
+    (decodedText) => {
+      console.log("QR Code Scanned:", decodedText);
+      document.getElementById("result").innerText = decodedText;
+      markAttendance(decodedText);
+      stopScanner(); // Stop scanning after success
+    },
+    (errorMessage) => {
+      console.log("Scanning error:", errorMessage);
+    }
+  ).catch((err) => {
+    console.error("Error starting scanner:", err);
+  });
+}
+
+function stopScanner() {
+  if (scanner) {
+    scanner.stop()
+      .then(() => {
+        console.log("Scanner stopped.");
+      })
+      .catch((err) => {
+        console.error("Error stopping scanner:", err);
+      });
+  }
+}
+
+// Function to send scanned data for attendance
+const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+function markAttendance(scannedData) {
+    console.log("Scanned user ID (before sending):", scannedData); // Debug log
+
+    const requestBody = JSON.stringify({ uid: scannedData });
+    console.log("Sending to backend:", requestBody); // Log exact request
+
+    fetch("/attendances", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-CSRF-Token": csrfToken
+        },
+        body: requestBody
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+        }
+        return response.json();
+    })
+    .then(data => console.log("Success:", data))
+    .catch(error => console.error("Error:", error));
+}
+
+// Attach to buttons
+document.getElementById("start-btn").addEventListener("click", startScanner);
+document.getElementById("stop-btn").addEventListener("click", stopScanner);
+
+</script>
+
+<style>
+  .scanner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #reader {
+    width: 300px !important;
+    max-width: 100%;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  #result {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+  }
+</style>

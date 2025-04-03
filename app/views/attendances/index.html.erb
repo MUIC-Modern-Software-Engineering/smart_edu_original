@@ -20,7 +20,7 @@
       <% @attendances.each do |attendance| %>
         <tr>
           <td><%= attendance.student_id %></td>
-          <td><%= attendance.timestamp %></td>
+          <td class="timestamp"><%= attendance.timestamp %></td>
           <td><%= attendance.user_id %></td>
           <td>
             <%= link_to attendance, class: "hover:text-blue-500 text-blue-700" do %>

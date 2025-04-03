@@ -1,0 +1,16 @@
+<!-- app/views/qrcodes/show.html.erb -->
+<% content_for :title, "Your QR Code" %>
+<div class="flex items-center justify-center min-h-[calc(100vh-64px)]">
+  <div class="stats shadow text-3xl">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <i class="fa-solid fa-qrcode"></i>
+      </div>
+      <div class="stat-title">Your QR Code</div>
+      <div class="stat-value">
+        <%= raw @qr_code %>  <!-- Render the SVG QR code -->
+      </div>
+      <div class="stat-desc">Scan this QR code for your ID</div>
+    </div>
+  </div>
+</div>

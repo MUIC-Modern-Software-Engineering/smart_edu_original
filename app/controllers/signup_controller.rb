@@ -1,5 +1,5 @@
 class SignupController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
+  allow_unauthenticated_access only: %i[new create]
 
   def new
     @user = User.new
@@ -8,6 +8,7 @@ class SignupController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id  # Ensure the session is set
       start_new_session_for @user
       redirect_to after_authentication_url
     else
@@ -16,7 +17,8 @@ class SignupController < ApplicationController
   end
 
   private
+
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
+    params.require(:user).permit(:email_address, :password, :password_confirmation, :first_name, :last_name)
   end
 end
